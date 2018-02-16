@@ -6,8 +6,8 @@ pipeline {
                 sh 'echo "Hallo Welt"'
                 sh '''
                    whoami
-                   ./foo.sh'
-                   'sleep 15'
+                   ./foo.sh
+                   sleep 15
                 sh '''
                 sh '''
                     echo "Multiline shell steps works too"
