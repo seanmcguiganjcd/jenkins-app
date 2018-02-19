@@ -20,9 +20,6 @@ pipeline {
                 sh 'echo "Running tests"'
             }
         }
- 
-
- 
         stage ('Deploy') {
             steps {
                 sh 'echo "Deploying artifact"'
