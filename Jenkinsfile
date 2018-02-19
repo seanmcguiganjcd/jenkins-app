@@ -9,7 +9,7 @@ pipeline {
                    pwd
                    sleep 5
                    ls -l
-                   echo *
+                   ./foo.sh
                    sleep 5
                 sh '''
                 
