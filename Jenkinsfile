@@ -15,5 +15,10 @@ pipeline {
                 '''
             }
         }
+        stage ('Test') {
+            steps {
+                sh 'echo "Running tests"'
+            }
+        }
     }
 }
