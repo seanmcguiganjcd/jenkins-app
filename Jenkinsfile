@@ -11,8 +11,7 @@ pipeline {
                    ls -l
                    ./foo.sh
                    sleep 5
-                sh '''
-                
+                '''
                 sh '''
                     echo "Multiline shell steps works too"                    
                 '''
