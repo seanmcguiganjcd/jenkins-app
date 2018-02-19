@@ -20,11 +20,9 @@ pipeline {
                 sh 'echo "Running tests"'
             }
         }
-        stage ('Verify before deploy') {
-            steps {
-                input "Does the staging environment look ok?"
-            }
-        }
+
+        input 'Continue to deploy stage?'
+
         stage ('Deploy') {
             steps {
                 sh 'echo "Deploying artifact"'
