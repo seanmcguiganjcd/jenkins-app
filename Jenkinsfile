@@ -21,10 +21,7 @@ pipeline {
             }
         }
  
-        stage ('Verify before deploy')
-            steps {
-                input "Does the staging environment look ok?"
-            }
+
  
         stage ('Deploy') {
             steps {
