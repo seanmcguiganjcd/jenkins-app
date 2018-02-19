@@ -6,14 +6,15 @@ pipeline {
                 sh 'echo "Hallo Welt"'
                 
                 sh '''
-                   whoami
-                   sleep 15
-                
+                   pwd
+                   sleep 5
+                   ls -l
+                   echo *
+                   sleep 5
                 sh '''
                 
                 sh '''
-                    echo "Multiline shell steps works too"
-                    ls -lah
+                    echo "Multiline shell steps works too"                    
                 '''
             }
         }
