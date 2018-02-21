@@ -1,30 +1,47 @@
-pipeline {
-    agent any
-    stages {
-        stage('Build') {
-            steps {
-                sh 'echo "Hallo Welt"'
-                
-                sh '''
-                   pwd
-                   sleep 5
-                   ls -l
-                   ./foo.sh
-                   sleep 5
-                '''
-                sh '''
-                    echo "Multiline shell steps works too"                    
-                '''
+podTemplate(label: 'mypod', containers: [
+    containerTemplate(name: 'docker', image: 'docker', ttyEnabled: true, command: 'cat'),
+    containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.8.0', command: 'cat', ttyEnabled: true),
+    containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:latest', command: 'cat', ttyEnabled: true)
+  ],
+  volumes: [
+    hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
+  ]) {
+    node('mypod') {
+
+        stage('do some Docker work') {
+            container('docker') {
+
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', 
+                        credentialsId: 'DockerHub',
+                        usernameVariable: 'DOCKER_HUB_USER', 
+                        passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
+                    
+                    sh """
+                        docker pull ubuntu
+                        docker tag ubuntu ${env.DOCKER_HUB_USER}/ubuntu:${env.BUILD_NUMBER}
+                        """
+                    sh "docker login -u ${env.DOCKER_HUB_USER} -p ${env.DOCKER_HUB_PASSWORD} "
+                    sh "docker push ${env.DOCKER_HUB_USER}/ubuntu:${env.BUILD_NUMBER} "
+                }
             }
         }
-        stage ('Test') {
-            steps {
-                sh 'echo "Running tests"'
+
+        stage('do some kubectl work') {
+            container('kubectl') {
+
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', 
+                        credentialsId: 'DockerHub',
+                        usernameVariable: 'DOCKER_HUB_USER',
+                        passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
+                    
+                    sh "kubectl get nodes"
+                }
             }
         }
-        stage ('Deploy') {
-            steps {
-                sh 'echo "Deploying artifact"'
+        stage('do some helm work') {
+            container('helm') {
+
+               sh "helm ls"
             }
         }
     }
