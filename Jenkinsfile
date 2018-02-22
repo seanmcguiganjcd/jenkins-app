@@ -17,6 +17,7 @@ podTemplate(label: 'mypod', containers: [
                         passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
                     
                     sh """
+                        docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.8 go build -tags netgo -o http-sample
                         docker pull ubuntu
                         docker tag ubuntu ${env.DOCKER_HUB_USER}/ubuntu:${env.BUILD_NUMBER}
                         """
