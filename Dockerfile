@@ -2,11 +2,17 @@ FROM golang:1.8
 
 MAINTAINER seanmcguigan@gmx.com
 
-COPY app-code/http-sample /app/http-sample
+RUN mkdir /app
+
+COPY app-code /app
+
+RUN ls -l /app/
 
 #USER bitnami
 
 WORKDIR /app
+
+RUN go build -tags netgo -o http-sample
 
 EXPOSE 3000
 
