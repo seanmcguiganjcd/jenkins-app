@@ -11,15 +11,15 @@ podTemplate(label: 'mypod', containers: [
         stage('do some Docker work') {
             container('docker') {
 
-                withCredentials([[$class: 'UsernamePasswordMultiBinding', 
+                withCredentials([[$class: 'UsernamePasswordMultiBinding',
                         credentialsId: 'DockerHub',
-                        usernameVariable: 'DOCKER_HUB_USER', 
+                        usernameVariable: 'DOCKER_HUB_USER',
                         passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
                     
                     sh """
                         pwd
                         ls -l
-                        ls ..       
+                        ls ..   
                         """
                     sh "docker login -u ${env.DOCKER_HUB_USER} -p ${env.DOCKER_HUB_PASSWORD} "
                 }
