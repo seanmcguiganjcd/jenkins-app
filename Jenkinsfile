@@ -17,7 +17,8 @@ podTemplate(label: 'mypod', containers: [
                         passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
                     
                     sh """
-                        docker build -t ${env.DOCKER_HUB_USER}/go_app:${env.BUILD_NUMBER} .
+                        pwd
+                        ls -l        
                         """
                     sh "docker login -u ${env.DOCKER_HUB_USER} -p ${env.DOCKER_HUB_PASSWORD} "
                     sh "docker push ${env.DOCKER_HUB_USER}/go_app:${env.BUILD_NUMBER} "
