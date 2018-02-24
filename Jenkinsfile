@@ -1,3 +1,5 @@
+#!/usr/bin/env groovy
+
 podTemplate(label: 'mypod', containers: [
     containerTemplate(name: 'docker', image: 'docker', ttyEnabled: true, command: 'cat'),
     containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.8.0', command: 'cat', ttyEnabled: true),
@@ -7,6 +9,7 @@ podTemplate(label: 'mypod', containers: [
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
   ]) {
     node('mypod') {
+        checkout scm
 
         stage('do some Docker work') {
             container('docker') {
