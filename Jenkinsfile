@@ -26,6 +26,10 @@ podTemplate(label: 'mypod', containers: [
             }
         }
 
+        stage('test slave') {
+            sh "ls -l"
+        }
+
         stage('do some kubectl work') {
             container('kubectl') {
 
