@@ -43,7 +43,7 @@ podTemplate(label: 'mypod', containers: [
         stage('do some helm work') {
             container('helm') {
 
-               sh "helm ls"
+               sh "helm upgrade -i --debug go-http ./go-http --set image.tag=${env.BUILD_NUMBER}"
             }
         }
     }
