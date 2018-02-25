@@ -6,7 +6,7 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "Roise is the best! Your Go application has been successfully deployed to dev on Kubernetes.")
+    fmt.Fprintf(w, "doc is the best! Your Go application has been successfully deployed to dev on Kubernetes.")
 }
 
 func main() {

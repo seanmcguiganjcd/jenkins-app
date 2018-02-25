@@ -43,11 +43,6 @@ podTemplate(label: 'mypod', containers: [
         stage('do some helm work') {
             container('helm') {
 
-                withCredentials([[$class: 'UsernamePasswordMultiBinding', 
-                        credentialsId: 'DockerHub',
-                        usernameVariable: 'DOCKER_HUB_USER',
-                        passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
-
                sh "helm upgrade -i --debug go-http ./go-http --set image.tag=${env.BUILD_NUMBER}"
             }
         }
