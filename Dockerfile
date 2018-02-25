@@ -8,8 +8,6 @@ COPY app-code /app
 
 RUN ls -l /app/
 
-#USER bitnami
-
 WORKDIR /app
 
 RUN go build -tags netgo -o http-sample
